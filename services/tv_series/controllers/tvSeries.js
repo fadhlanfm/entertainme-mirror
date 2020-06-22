@@ -11,8 +11,9 @@ class tvSeriesController {
   }
 
   static async showOneTvSeries(req, res) {
+    const { id } = req.params
     try {
-      const tvSeries = await tvSeriesModel.showOneTvSeries(req.params.id)
+      const tvSeries = await tvSeriesModel.showOneTvSeries(id)
       return res.status(200).json(tvSeries)
     } catch (error) {
       console.log(error)
@@ -20,8 +21,10 @@ class tvSeriesController {
   }
 
   static async addTvSeries(req, res) {
+    const { title, overview, poster_path, popularity, tags } = req.body
+    const newTvSeries = { title, overview, poster_path, popularity, tags }
     try {
-      const tvSeries = await tvSeriesModel.addTvSeries(req.body)
+      const tvSeries = await tvSeriesModel.addTvSeries(newTvSeries)
       return res.status(200).json(tvSeries)
     } catch (error) {
       console.log(error)
@@ -30,8 +33,11 @@ class tvSeriesController {
   }
 
   static async updateTvSeries(req, res){
+    const { id } = req.params
+    const { title, overview, poster_path, popularity, tags } = req.body
+    const updates = { title, overview, poster_path, popularity, tags }
     try {
-      const tvSeries = await tvSeriesModel.updateTvSeries(req.params.id, req.body)
+      const tvSeries = await tvSeriesModel.updateTvSeries(id, updates)
       return res.status(200).json(tvSeries)
     } catch (error) {
       console.log(error)
@@ -39,8 +45,9 @@ class tvSeriesController {
   }
 
   static async deleteTvSeries(req, res){
+    const { id } = req.params
     try {
-      const tvSeries = await tvSeriesModel.deleteTvSeries(req.params.id)
+      const tvSeries = await tvSeriesModel.deleteTvSeries(id)
       return res.status(200).json(tvSeries)
     } catch (error) {
       console.log(error)

@@ -1,7 +1,7 @@
-const { getDB } = require('../config/mongo')
+const { getDb } = require('../config/mongo')
 const { ObjectId } = require('mongodb')
 
-const db = getDB()
+const db = getDb()
 
 db.createCollection('TvSeries', {
   validator: {

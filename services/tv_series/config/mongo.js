@@ -18,11 +18,11 @@ function connect(callback) {
   }) 
 }
 
-function getDB() {
+function getDb() {
   return db
 }
 
 module.exports = {
   connect,
-  getDB
+  getDb
 }

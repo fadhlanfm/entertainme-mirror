@@ -10,8 +10,6 @@ connect((err) => {
     app.use(express.json())
     app.use(express.urlencoded({ extended:true }))
     app.use('/', tvSeriesRouter)
-    app.listen(PORT, () => {
-      console.log('listening to tv_series server on port', PORT)
-    })
+    app.listen(PORT, () => console.log('listening to tv_series server on port', PORT))
   }
 })
