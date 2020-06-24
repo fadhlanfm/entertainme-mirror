@@ -1,71 +1,72 @@
-const { getDb } = require('../config/mongo')
-const { ObjectId } = require('mongodb')
+const { getDb } = require("../config/mongo");
+const { ObjectID } = require("mongodb");
 
-const db = getDb()
+const db = getDb();
 
-db.createCollection('Movies', {
+db.createCollection("Movies", {
   validator: {
     $jsonSchema: {
-      bsonType: 'object',
-      required: ['title','overview','poster_path','popularity','tags'],
+      bsonType: "object",
+      required: ["title", "overview", "poster_path", "popularity", "tags"],
       properties: {
         title: {
-          bsonType: 'string',
-          description: 'title must be string and is required'
+          bsonType: "string",
+          description: "title must be a string",
         },
         overview: {
-          bsonType: 'string',
-          description: 'overview must be string and is required'
+          bsonType: "string",
+          description: "overview must be a string",
         },
         poster_path: {
-          bsonType: 'string',
-          description: 'poster_path must be string and is required'
+          bsonType: "string",
+          description: "poster_path must be a string",
         },
         popularity: {
-          bsonType: ['double','int'],
-          description: 'popularity must be double/integer and is required'
+          bsonType: ["double"],
+          description: "popularity must be a double",
         },
         tags: {
-          bsonType: ['array','string'],
-          description: 'tags must be an array of string and is required'
-        }
-      }
-    }
-  }
-})
+          bsonType: ["array", "string"],
+          description: "tags must be an array of string",
+        },
+      },
+    },
+  },
+});
 
-const Movies = db.collection('Movies')
+const Movies = db.collection("Movies");
 
 class moviesModel {
-  static showMovies() {
-    return Movies.find({}).toArray()
+  static getAllMovies() {
+    return Movies.find({}).toArray();
   }
 
-  static showOneMovie(id) {
-    return Movies.findOne({ _id: ObjectId(id) })
+  static getMovieById(id) {
+    return Movies.findOne({ _id: ObjectID(id) });
   }
 
   static addMovie(newMovie) {
-    return Movies.insertOne(newMovie)
+    return Movies.insertOne(newMovie);
   }
 
-  static updateMovie(id, movie) {
+  static updateMovie(id, updates) {
     return Movies.updateOne(
-      { _id: ObjectId(id) }, {
-        $set : {
-          title: movie.title, 
-          overview: movie.overview, 
-          poster_path: movie.poster_path, 
-          popularity: movie.popularity, 
-          tags: movie.tags
-        }
+      { _id: ObjectID(id) },
+      {
+        $set: {
+          title: updates.title,
+          overview: updates.overview,
+          poster_path: updates.poster_path,
+          popularity: updates.popularity,
+          tags: updates.tags,
+        },
       }
-    )
+    );
   }
 
   static deleteMovie(id) {
-    return Movies.deleteOne({ _id: ObjectId(id) })
+    return Movies.deleteOne({ _id: ObjectID(id) });
   }
 }
 
-module.exports = moviesModel
+module.exports = moviesModel;

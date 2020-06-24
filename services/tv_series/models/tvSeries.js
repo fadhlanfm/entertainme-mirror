@@ -1,71 +1,72 @@
-const { getDb } = require('../config/mongo')
-const { ObjectId } = require('mongodb')
+const { getDb } = require("../config/mongo");
+const { ObjectID } = require("mongodb");
 
-const db = getDb()
+const db = getDb();
 
-db.createCollection('TvSeries', {
+db.createCollection("TvSeries", {
   validator: {
     $jsonSchema: {
-      bsonType: 'object',
-      required: ['title','overview','poster_path','popularity','tags'],
+      bsonType: "object",
+      required: ["title", "overview", "poster_path", "popularity", "tags"],
       properties: {
         title: {
-          bsonType: 'string',
-          description: 'title must be string and is required'
+          bsonType: "string",
+          description: "title must be a string",
         },
         overview: {
-          bsonType: 'string',
-          description: 'overview must be string and is required'
+          bsonType: "string",
+          description: "overview must be a string",
         },
         poster_path: {
-          bsonType: 'string',
-          description: 'poster_path must be string and is required'
+          bsonType: "string",
+          description: "poster_path must be a string",
         },
         popularity: {
-          bsonType: ['double','int'],
-          description: 'popularity must be double/integer and is required'
+          bsonType: ["double"],
+          description: "popularity must be a double",
         },
         tags: {
-          bsonType: ['array','string'],
-          description: 'tags must be an array of string and is required'
-        }
-      }
-    }
-  }
-})
+          bsonType: ["array", "string"],
+          description: "tags must be an array of string",
+        },
+      },
+    },
+  },
+});
 
-const TvSeries = db.collection('TvSeries')
+const TvSeries = db.collection("TvSeries");
 
 class tvSeriesModel {
-  static showTvSeries() {
-    return TvSeries.find({}).toArray()
+  static getAllTvSeries() {
+    return TvSeries.find({}).toArray();
   }
 
-  static showOneTvSeries(id) {
-    return TvSeries.findOne({ _id: ObjectId(id) })
+  static getTvSeriesById(id) {
+    return TvSeries.findOne({ _id: ObjectID(id) });
   }
 
   static addTvSeries(newTvSeries) {
-    return TvSeries.insertOne(newTvSeries)
+    return TvSeries.insertOne(newTvSeries);
   }
 
-  static updateTvSeries(id, tvSeries) {
+  static updateTvSeries(id, updates) {
     return TvSeries.updateOne(
-      { _id: ObjectId(id) }, {
-        $set : {
-          title: tvSeries.title, 
-          overview: tvSeries.overview, 
-          poster_path: tvSeries.poster_path, 
-          popularity: tvSeries.popularity, 
-          tags: tvSeries.tags
-        }
+      { _id: ObjectID(id) },
+      {
+        $set: {
+          title: updates.title,
+          overview: updates.overview,
+          poster_path: updates.poster_path,
+          popularity: updates.popularity,
+          tags: updates.tags,
+        },
       }
-    )
+    );
   }
 
   static deleteTvSeries(id) {
-    return TvSeries.deleteOne({ _id: ObjectId(id) })
+    return TvSeries.deleteOne({ _id: ObjectID(id) });
   }
 }
 
-module.exports = tvSeriesModel
+module.exports = tvSeriesModel;

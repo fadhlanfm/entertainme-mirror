@@ -1,28 +1,27 @@
-const { MongoClient } = require('mongodb')
+const { MongoClient } = require("mongodb");
+const url = "mongodb://localhost:27017";
+const dbName = "entertainMe";
 
-const url = 'mongodb://localhost:27017'
-const dbName = 'entertainMe'
-
-let db
-const client = new MongoClient(url, { useUnifiedTopology: true })
+let db;
+const client = new MongoClient(url, { useUnifiedTopology: true });
 
 function connect(callback) {
   client.connect(function (error) {
     if (error) {
-      console.log('db connection error')
+      console.log("db connection error");
     } else {
-      console.log('db connected')
-      db = client.db(dbName)
+      console.log("db connected");
+      db = client.db(dbName);
     }
-    callback(error)
-  }) 
+    callback(error);
+  });
 }
 
 function getDb() {
-  return db
+  return db;
 }
 
 module.exports = {
   connect,
-  getDb
-}
+  getDb,
+};

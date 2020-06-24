@@ -1,10 +1,10 @@
-const router = require('express').Router()
-const entertainMeController = require('../controllers/entertainMeController')
-const moviesRouter = require('./movies')
-const tvSeriesRouter = require('./tvSeries')
+const router = require("express").Router();
+const moviesRouter = require("./movies");
+const tvSeriesRouter = require("./tvSeries");
+const entertainMeController = require("../controllers/entertainMe");
 
-router.get('/', entertainMeController.findAll)
-router.use('/movies', moviesRouter)
-router.use('/tv_series', tvSeriesRouter)
+router.get("/entertainme", entertainMeController.getAllMoviesAndTvSeries);
+router.use("/movies", moviesRouter);
+router.use("/tv", tvSeriesRouter);
 
-module.exports = router
+module.exports = router;

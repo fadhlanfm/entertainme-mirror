@@ -1,0 +1,67 @@
+query Movies{
+  getAllMovies{
+    _id
+    title
+  }
+  
+  getAllTvSeries{
+    _id
+    title
+  }
+  
+  getMovieById(id: "5ef2a4510255f91724bdc29a"){
+    title
+  }
+  
+  getTvSeriesById(id: "5ef26483316add1b70ffb6cb"){
+    title
+  }  
+}
+
+# mutation addMovie{
+#   addMovie(movie: {
+#     title: "testsdfdfes"
+#     overview: "testes"
+# 		poster_path: "testes"
+# 		popularity: 80
+# 		tags: ["sdf", "sdfd"]
+#   }){
+#     _id
+#     title
+#     overview
+#   }
+  
+#   addTvSeries(tvSeries: {
+#     title: "testsdfdfes tv"
+#     overview: "testes tv"
+# 		poster_path: "testes tv"
+# 		popularity: 80
+# 		tags: ["sdf tv", "sdfd tv"]
+#   }){
+#     _id
+#     title
+#     overview
+#   }
+  
+#   # updateMovie(id: "5ef2a4510255f91724bdc29a", updates: {
+#   #   title: "edit ah"
+#   # }){
+#   #   _id
+#   #   title
+#   # }
+  
+#   updateTvSeries(id: "5ef2a57f7853fb221cd93adb", updates: {
+#     title: "edit ah"
+#   }){
+#     _id
+#     title
+#   }
+  
+#   # deleteMovie(id: "5ef2a4510255f91724bdc29a"){
+#   #   title
+#   # }
+  
+#   deleteTvSeries(id: "5ef2a57f7853fb221cd93adb"){
+#     title
+#   }
+# }
