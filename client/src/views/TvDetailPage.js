@@ -3,26 +3,20 @@ import { useParams, useHistory } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { toast } from "react-toastify";
 import { Modal } from "react-bootstrap";
-import { GET_MOVIE, DELETE_MOVIE, UPDATE_MOVIE } from "../queries/movies";
+import { GET_TV, DELETE_TV, UPDATE_TV } from "../queries/tv";
 import Loading from "../components/Loading";
 
 function DetailPage() {
-  let { id } = useParams();
-  // console.log(id, typeof id);
+  const { id } = useParams();
   const history = useHistory();
 
-  let { loading, error, data, refetch } = useQuery(GET_MOVIE, {
+  const { loading, error, data, refetch } = useQuery(GET_TV, {
     variables: { _id: id },
   });
-  // console.log("data", data);
 
-  const [deleteMovie] = useMutation(DELETE_MOVIE);
+  const [deleteTv] = useMutation(DELETE_TV);
 
-  // const [updateMovie] = useMutation(UPDATE_MOVIE, {
-  //   refetchQueries: [{ query: GET_MOVIE, variables: { _id: id } }],
-  // });
-
-  const [updateMovie] = useMutation(UPDATE_MOVIE);
+  const [updateTv] = useMutation(UPDATE_TV);
 
   const [newTitle, setNewTitle] = useState("");
   const [newOverview, setNewOverview] = useState("");
@@ -48,7 +42,7 @@ function DetailPage() {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    deleteMovie({ variables: { id } });
+    deleteTv({ variables: { id } });
     toast.success("Successfully Deleted");
     history.goBack();
   };
@@ -57,29 +51,18 @@ function DetailPage() {
   const handleClose = () => setShow(false);
 
   const handleShow = () => {
-    setNewTitle(data.getMovieById.title);
-    setNewOverview(data.getMovieById.overview);
-    setNewPosterPath(data.getMovieById.PosterPath);
-    setNewPopularity(data.getMovieById.popularity);
-    setNewTags(data.getMovieById.tags);
+    setNewTitle(data.getTvSeriesById.title);
+    setNewOverview(data.getTvSeriesById.overview);
+    setNewPosterPath(data.getTvSeriesById.poster_path);
+    setNewPopularity(data.getTvSeriesById.popularity);
+    setNewTags(data.getTvSeriesById.tags);
     setShow(true);
   };
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    // newCreate.id = id;
-    // newCreate.title = newTitle;
-    // newCreate.overview = newOverview;
-    // newCreate.PosterPath = newPosterPath;
-    // newCreate.popularity = newPopularity;
-    // newCreate.tags = newTags;
-    // console.log("newCreate >>>>>>>>>>>>", newCreate);
-    // updateMovie({ variables: newCreate });
-    // let tags = newTags.split(",");
-    // console.log(newTags.split(","));
-    // console.log("newPosterPath", newPosterPath);
     let popular = Number(newPopularity);
-    updateMovie({
+    updateTv({
       variables: {
         _id: id,
         updates: {
@@ -91,8 +74,6 @@ function DetailPage() {
         },
       },
     });
-    toast.success("Successfully Updated");
-    setShow(false);
   };
   if (loading) {
     return <Loading />;
@@ -107,17 +88,16 @@ function DetailPage() {
         <div className="col">
           <img
             style={{ width: "300px", padding: "0 10px 0 20px" }}
-            src={data.getMovieById.poster_path}
-            alt={data.getMovieById._id}
+            src={data.getTvSeriesById.poster_path}
+            alt={data.getTvSeriesById._id}
           />
-          {console.log("posterpath nih", data.getMovieById.poster_path)}
         </div>
         <div className="col text-left mr-3">
-          <h1 className="border p-2">{data.getMovieById.title}</h1>
-          <h6 className="border p-2">{data.getMovieById.overview}</h6>
-          <h3 className="border p-2">{data.getMovieById.popularity}</h3>
+          <h1 className="border p-2">{data.getTvSeriesById.title}</h1>
+          <h6 className="border p-2">{data.getTvSeriesById.overview}</h6>
+          <h3 className="border p-2">{data.getTvSeriesById.popularity}</h3>
           <h3 className="border p-2">
-            {data.getMovieById.tags.map((el) => {
+            {data.getTvSeriesById.tags.map((el) => {
               return (
                 <button
                   className="btn btn-success m-1"
@@ -136,17 +116,11 @@ function DetailPage() {
           >
             Back
           </button>
-          <button className="btn btn-primary m-2" onClick={handleShow}>
-            Update
-          </button>
-          <button className="btn btn-danger m-2" onClick={handleDelete}>
-            Delete
-          </button>
         </div>
 
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Update Movie</Modal.Title>
+            <Modal.Title>Update Tv</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <form onSubmit={handleUpdate}>

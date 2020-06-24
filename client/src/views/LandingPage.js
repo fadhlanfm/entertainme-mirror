@@ -16,7 +16,7 @@ export default () => {
 
   return (
     <>
-      <h1>ENTERTAINME</h1>
+      <h1>ENTERTAIN ME</h1>
       <div className="row flex-column">
         <hr style={{ border: "1px solid white", width: "100vw" }} />
         <h2>Movies</h2>

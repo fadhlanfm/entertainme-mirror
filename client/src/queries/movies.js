@@ -46,11 +46,9 @@ export const ADD_MOVIE = gql`
 `;
 
 export const DELETE_MOVIE = gql`
-  mutation deleteMovie($id: String!) {
-    deleteMovie(_id: $id) {
+  mutation deleteMovie($id: String) {
+    deleteMovie(id: $id) {
       _id
-      status
-      message
     }
   }
 `;
