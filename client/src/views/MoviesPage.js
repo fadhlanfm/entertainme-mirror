@@ -38,7 +38,14 @@ export default () => {
     newCreate.popularity = +newPopularity;
     newCreate.tags = newTags.split(",").map((el) => el.trim());
 
-    addMovie({ variables: newCreate });
+    addMovie({
+      variables: newCreate,
+      refetchQueries: [
+        {
+          query: GET_MOVIES,
+        },
+      ],
+    });
     toast.success("Successfully Added");
 
     setNewTitle("");

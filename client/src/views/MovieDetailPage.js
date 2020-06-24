@@ -46,12 +46,13 @@ function DetailPage() {
     setNewTags(e.target.value);
   };
 
-  const handleDelete = (e) => {
+  async function handleDelete(e) {
     e.preventDefault();
-    deleteMovie({ variables: { id } });
+    await deleteMovie({ variables: { id } });
+    refetch();
     toast.success("Successfully Deleted");
     history.goBack();
-  };
+  }
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -61,11 +62,11 @@ function DetailPage() {
     setNewOverview(data.getMovieById.overview);
     setNewPosterPath(data.getMovieById.PosterPath);
     setNewPopularity(data.getMovieById.popularity);
-    setNewTags(data.getMovieById.tags);
+    setNewTags(data.getMovieById.tags.join(","));
     setShow(true);
   };
 
-  const handleUpdate = (e) => {
+  async function handleUpdate(e) {
     e.preventDefault();
     // newCreate.id = id;
     // newCreate.title = newTitle;
@@ -79,7 +80,7 @@ function DetailPage() {
     // console.log(newTags.split(","));
     // console.log("newPosterPath", newPosterPath);
     let popular = Number(newPopularity);
-    updateMovie({
+    await updateMovie({
       variables: {
         _id: id,
         updates: {
@@ -91,9 +92,11 @@ function DetailPage() {
         },
       },
     });
+    refetch();
     toast.success("Successfully Updated");
     setShow(false);
-  };
+  }
+
   if (loading) {
     return <Loading />;
   }
